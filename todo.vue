@@ -68,30 +68,39 @@ import firebase fr
     firebase.initializeApp(firebaseConfig);
     var db = firebase.firestore(); 
 
-    export default{
-        data(){
+    export default {
+        data() {
             return{
                 todos:[],
-                newTask:'' 
+                newTask:''
             }
         },
-        firestore(){
+        firestore() {
             return{
                 todos:db.collection('todos'),
             }
         },
-        methods:{
-            addTodo(){
+        methods: {
+            addTodo() {
                 db.collection('todos').add({
                     task : this.newTask,
                     timestamp : new Date(),
                 }); 
+                    console.log(this.newTask + "save data!");
                },
             loadTodo() {
-                db.collection("cities").get().then(function(querySnapshot) {
+                let content = "";
+                db.collection("todos").get().then(function(querySnapshot) {
                     querySnapshot.forEach(function(doc) {
-                // doc.data() is never undefined for query doc snapshots
-                console.log(doc.id, " => ", doc.data());
+                    // doc.data() is never undefined for query doc snapshots
+                    console.log(doc.id, " => ", doc.data().task);
+                    let html = "";
+                    const ts = "";
+                        html += "<td>" + doc.data().task + "</td>"
+                        html += "<td>" + doc.data().timestamp + "</td>"
+                        html += "<tr>"
+                        content += html;
+                        document.body.children[0].children[3].children[0].children[4].children[1].innerHTML = content;
                     });
                 });
             }
