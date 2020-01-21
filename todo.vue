@@ -1,33 +1,67 @@
+import firebase fr
 <template>
     <div>
         <h1 style = "color: blueviolet">Add to do list </h1>
-        Task : <input type="text"><br/><br/>
-        Due Date : <input type="text"><br/><br/>    
+        Task : <input type="text"
+                v-model="newTask">
+        Due Date :<input type="text"
+                v-model="dueDate"><br/><br/>   
+
         <button type="button" 
                 class="btn btn-info" 
-                v-on:click="saveTodo()">
-        Save</button><br/><br/> 
-        <p>{{this.taskTodo}}</p>
-        <p>{{this.dueDate}}</p>
+                v-on:click="addTodo()">
+        Add Todo
+        </button><br/><br/> 
+        
     </div>
 </template>
 
-<script>
+<!--firebase config-->
+<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-firestore.js"></script>
 
+<script>
+    import { firebase } from "@firebase/app";
+    import "@firebase/firestore";
+   // import { db } from './firebase';
+    
+    var firebaseConfig = {
+        apiKey: "AIzaSyBGXFuW2-dgcqzr2Qi3FJHHUNgqchi6qNw",
+        authDomain: "mytodo-9c7de.firebaseapp.com",
+        databaseURL: "https://mytodo-9c7de.firebaseio.com",
+        projectId: "mytodo-9c7de",
+        storageBucket: "mytodo-9c7de.appspot.com",
+        messagingSenderId: "971316618674",
+        appId: "1:971316618674:web:d3644e81ae09d909f630ab"
+    };
+    
+    firebase.initializeApp(firebaseConfig);
+    var db = firebase.firestore();
+    
+    
     export default{
         data(){
             return{
-                taskTodo:"",
-                dueDate:"",
+                todos:[],
+                newTask:'',
+                dueDate:''   
+            }
+        },
+        firestore(){
+            return{
+                todos:db.collection('todos'),
             }
         },
         methods:{
-            saveTodo(){
-               this.taskTodo = document.body.children[0].children[1].value;
-               this.dueDate = document.body.children[0].children[4].value;
-              
-              // console.log("save !");
-              // console.log(this.dueDate);
+            addTodo(){
+                db.collection('todos').add({
+                    task : this.newTask,
+                    dueDate: this.dueDate,
+                    timestamp : new Date(),
+                });
+                
+                
+                
                }
             }
     }
