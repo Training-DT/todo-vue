@@ -20,6 +20,9 @@ import firebase fr
         <div class="card">
             <div class="card-body">
                 <h3 class="card-title">Todo List</h3>
+                <button type="button" class="btn btn-danger" v-on:click="removeTodo()">
+                    Remove Todo
+                </button>
                 <table class="table">
                     <thead class="thead-dark">
                         <tr>
@@ -65,24 +68,29 @@ import firebase fr
     var db = firebase.firestore(); 
 
     export default{
-        data(){
-            return{
+        data() {
+            return {
                 todos:[],
                 newTask:'' 
             }
         },
-        firestore(){
-            return{
+        firestore() {
+            return {
                 todos:db.collection('todos'),
             }
         },
         methods:{
-            addTodo(){
+            addTodo() {
                 db.collection('todos').add({
                     task : this.newTask,
                     timestamp : new Date(),
                 }); 
-               }
+               },
+            removeTodo() {
+                //const docRef = db.collection('todos').doc();
+                db.collection('todos').doc('4LHQEJIsXYrZBzWYYOvW').delete();
+                console.log("deleted !");
+                }
             }
     }
 </script>
