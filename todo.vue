@@ -20,6 +20,10 @@ import firebase fr
         <div class="card">
             <div class="card-body">
                 <h3 class="card-title">Todo List</h3>
+                <button type="button" class="btn btn-warning" v-on:click="loadTodo()">
+                    Load Todo
+                </button><br><br>
+
                 <table class="table">
                     <thead class="thead-dark">
                         <tr>
@@ -82,8 +86,16 @@ import firebase fr
                     task : this.newTask,
                     timestamp : new Date(),
                 }); 
-               }
+               },
+            loadTodo() {
+                db.collection("cities").get().then(function(querySnapshot) {
+                    querySnapshot.forEach(function(doc) {
+                // doc.data() is never undefined for query doc snapshots
+                console.log(doc.id, " => ", doc.data());
+                    });
+                });
             }
+        }
     }
 </script>
 
