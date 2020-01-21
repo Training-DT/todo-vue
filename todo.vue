@@ -4,8 +4,6 @@ import firebase fr
         <h1 style = "color: blueviolet">Add to do list </h1>
         Task : <input type="text"
                 v-model="newTask">
-        Due Date :<input type="text"
-                v-model="dueDate"><br/><br/>   
 
         <button type="button" 
                 class="btn btn-info" 
@@ -43,8 +41,7 @@ import firebase fr
         data(){
             return{
                 todos:[],
-                newTask:'',
-                dueDate:''   
+                newTask:'' 
             }
         },
         firestore(){
@@ -56,7 +53,6 @@ import firebase fr
             addTodo(){
                 db.collection('todos').add({
                     task : this.newTask,
-                    dueDate: this.dueDate,
                     timestamp : new Date(),
                 });
                 
