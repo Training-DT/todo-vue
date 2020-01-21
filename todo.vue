@@ -1,3 +1,4 @@
+import firebase fr
 <template>
     <div id="app" class="container">
         <div class="page-header">
@@ -7,9 +8,12 @@
             <div class="card-body">
                 <h3 class="card-title">Add New Todo</h3>
                 <label for="bookTitle">Title:</label>
-                <input type="text" id="bookTitle" class="form-control">
+
+                <input type="text" v-model="newTask" class="form-control">
                 <br>
-                <input type="submit" class="btn btn-primary" value="Add Todo">
+                <button type="button" class="btn btn-info" v-on:click="addTodo()">
+                    Add Todo
+                </button> 
             </div>
         </div>
         <br>
@@ -39,7 +43,49 @@
   </div>
 </template>
 
+<!--firebase config-->
+<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-firestore.js"></script>
+
 <script>
+    import { firebase } from "@firebase/app";
+    import "@firebase/firestore";
+       
+    var firebaseConfig = {
+        apiKey: "AIzaSyBGXFuW2-dgcqzr2Qi3FJHHUNgqchi6qNw",
+        authDomain: "mytodo-9c7de.firebaseapp.com",
+        databaseURL: "https://mytodo-9c7de.firebaseio.com",
+        projectId: "mytodo-9c7de",
+        storageBucket: "mytodo-9c7de.appspot.com",
+        messagingSenderId: "971316618674",
+        appId: "1:971316618674:web:d3644e81ae09d909f630ab"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    var db = firebase.firestore(); 
+
+    export default{
+        data(){
+            return{
+                todos:[],
+                newTask:'' 
+            }
+        },
+        firestore(){
+            return{
+                todos:db.collection('todos'),
+            }
+        },
+        methods:{
+            addTodo(){
+                db.collection('todos').add({
+                    task : this.newTask,
+                    timestamp : new Date(),
+                }); 
+               }
+            }
+    }
+
 export default { 
     data() { 
         return {
@@ -59,7 +105,7 @@ export default {
             ]
         }
     }
-} 
+}
 </script>
 
 <style>
