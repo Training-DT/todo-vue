@@ -10,6 +10,7 @@
         <table class="table">
             <thead class="thead-dark">
                 <tr>
+                <th scope="col">id</th>
                 <th scope="col">date</th>
                 <th scope="col">todo</th>
                 <th scope="col">note</th>
