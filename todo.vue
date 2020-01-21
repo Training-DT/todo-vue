@@ -10,7 +10,6 @@
             </thead>
             <tbody>
                 <tr v-for="(ls) in list" v-bind:key="ls.id"> 
-                <!-- <th scope="row">{{1}}</th> -->
                     <td>{{ls.task}}</td>
                     <td>{{ls.time}}</td>
                     <td>
@@ -24,7 +23,7 @@
 
 <script>
 export default { 
-    data() {  //attribute
+    data() { 
         return {
             list: [
                 {   
