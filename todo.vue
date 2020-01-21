@@ -9,8 +9,7 @@ import firebase fr
                 class="btn btn-info" 
                 v-on:click="addTodo()">
         Add Todo
-        </button><br/><br/> 
-        
+        </button><br/><br/>     
     </div>
 </template>
 
@@ -31,11 +30,8 @@ import firebase fr
         messagingSenderId: "971316618674",
         appId: "1:971316618674:web:d3644e81ae09d909f630ab"
     };
-    
     firebase.initializeApp(firebaseConfig);
-    var db = firebase.firestore();
-    
-    
+    var db = firebase.firestore();  
     export default{
         data(){
             return{
@@ -53,17 +49,11 @@ import firebase fr
                 db.collection('todos').add({
                     task : this.newTask,
                     timestamp : new Date(),
-                });
-                
-                
-                
+                }); 
                }
             }
     }
-
-
 </script>
-
 <style>
     @import url("https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css")
 </style>
