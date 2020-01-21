@@ -29,9 +29,9 @@ import firebase fr
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(ls) in list" v-bind:key="ls.id"> 
+                        <tr v-for="(ls) in todos" v-bind:key="ls.id"> 
                             <td>{{ls.task}}</td>
-                            <td>{{ls.time}}</td>
+                            <td>{{ls.timestamp}}</td>
                             <td>
                                 <button class="btn btn-info"  > Done </button>
                             </td>
@@ -85,27 +85,6 @@ import firebase fr
                }
             }
     }
-
-export default { 
-    data() { 
-        return {
-            list: [
-                {   
-                    time : "Monday 09:30 am",
-                    task : "Big cleaning"
-                },
-                {   
-                    time : "Tuesday 13.00 pm",
-                    task : "Shopping"
-                },
-                 {  
-                     time : "Wednesday 14:00 pm",
-                    task : "meeting"
-                }
-            ]
-        }
-    }
-}
 </script>
 
 <style>
