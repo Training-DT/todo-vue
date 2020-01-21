@@ -21,8 +21,7 @@ import firebase fr
 <script>
     import { firebase } from "@firebase/app";
     import "@firebase/firestore";
-   // import { db } from './firebase';
-    
+       
     var firebaseConfig = {
         apiKey: "AIzaSyBGXFuW2-dgcqzr2Qi3FJHHUNgqchi6qNw",
         authDomain: "mytodo-9c7de.firebaseapp.com",
