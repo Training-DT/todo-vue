@@ -2,13 +2,11 @@ import firebase fr
 <template>
     <div>
         <h1 style = "color: blueviolet">Add to do list </h1>
-        Task : <input type="text"
-                v-model="newTask">
-
+        Task : <input type="text" v-model="newTask">
         <button type="button" 
                 class="btn btn-info" 
                 v-on:click="addTodo()">
-        Add Todo
+            Add Todo
         </button><br/><br/>     
     </div>
 </template>
@@ -30,8 +28,10 @@ import firebase fr
         messagingSenderId: "971316618674",
         appId: "1:971316618674:web:d3644e81ae09d909f630ab"
     };
+
     firebase.initializeApp(firebaseConfig);
-    var db = firebase.firestore();  
+    var db = firebase.firestore(); 
+
     export default{
         data(){
             return{
