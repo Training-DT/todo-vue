@@ -20,27 +20,24 @@ import firebase fr
         <div class="card">
             <div class="card-body">
                 <h3 class="card-title">Todo List</h3>
-                <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Todo</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>bbb</td>
-                    <td><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></td>
-                </tr>
-                <!-- <tr v-for="book in books">
-                    <td><a v-bind:href="book.url">{{book.title}}</a></td>
-                    <td>{{book.author}}</td>
-                    <td><span class="glyphicon glyphicon-trash" aria-hidden="true" v-on:click="removeBook(book)"></span></td>
-                </tr> -->
-            </tbody>
-            </table>
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">task</th>
+                            <th scope="col">Time</th>
+                            <th scope="col">Done</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(ls) in list" v-bind:key="ls.id"> 
+                            <td>{{ls.task}}</td>
+                            <td>{{ls.time}}</td>
+                            <td>
+                                <button class="btn btn-info"  > Done </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table> 
         </div>
     </div>
   </div>
@@ -88,6 +85,27 @@ import firebase fr
                }
             }
     }
+
+export default { 
+    data() { 
+        return {
+            list: [
+                {   
+                    time : "Monday 09:30 am",
+                    task : "Big cleaning"
+                },
+                {   
+                    time : "Tuesday 13.00 pm",
+                    task : "Shopping"
+                },
+                 {  
+                     time : "Wednesday 14:00 pm",
+                    task : "meeting"
+                }
+            ]
+        }
+    }
+}
 </script>
 
 <style>
