@@ -22,7 +22,7 @@
                 <td>{{ls.task}}</td>
                 <td>{{ls.time}}</td>
                 <td>
-                     <button class="btn btn-info"  v-on:click ="remove(index)"> Done </button>
+                     <button class="btn btn-info"  > Done </button>
                 </td>
                 </tr>
             </tbody>
