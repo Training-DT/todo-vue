@@ -1,59 +1,61 @@
 <template>
     <div>
-        <!doctype html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+       <p><h3>To do list: </h3><p/>
+       Date <input type="text">  To do <input type="text"><br><br>
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+       <!--create button-->
+       <!-- <button class="btn btn-success"  v-on:click ="SaveData"> Save Data </button>  -->
+        <button class="btn btn-info"  v-on:click ="LoadData"> Render table </button><br><br>
 
-    <title>Hello, world!</title>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                <th scope="col">date</th>
+                <th scope="col">todo</th>
+                <th scope="col">note</th>
+                 <th scope="col">button</th> 
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(user, index) in users" v-bind:key="user.id"> 
+                <th scope="row">{{index+1}}</th>
 
-    <style>
-        div {
-            border: 1px solid coral;
-        }
-    </style>
-
-  </head>
-  <body>
-    <h1>Hello, world!</h1>
-
-    <div class="container">
-
-        <div class="row">
-            <div class="col" style="height: 100px;">Header</div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-2 col-sm-12">
-            One of three columns
-          </div>
-          <div class="col">
-            One of three columns
-          </div>
-          <div class="col-md-2 col-sm-12">
-            One of three columns
-          </div>
-        </div>
-
-        <div class="row">
-            <div class="col">Footer</div>
-        </div>
-
-      </div>
-
-
-
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-  </body>
-</html>
+                <td>{{user.date}}</td>
+                <td>{{user.do}}</td>
+                <td>{{user.note}}</td>
+                <td>
+                     <button class="btn btn-danger"  v-on:click ="remove(index)"> Delete </button>
+                </td>
+                </tr>
+            </tbody>
+        </table>      
     </div>
 </template>
+
+<script>
+export default { 
+    data() {  //attribute
+        return {
+            users: []
+        }
+    }, 
+    methods: {
+        
+        LoadData(){
+            fetch('https://jsonplaceholder.typicode.com/users')
+            .then(response => response.json())
+            .then(json => {
+                this.users = json
+            })
+        },
+        remove(index){
+            this.users.splice(index ,1)
+        }
+    },
+    
+}
+</script>
+
+<style>
+    @import url("https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css")
+</style>
