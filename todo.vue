@@ -87,20 +87,22 @@ import firebase fr
                     timestamp : new Date(),
                 }); 
                     console.log(this.newTask + "save data!");
+                    console.log("=> *******"+timestamp);
                },
             loadTodo() {
                 let content = "";
-                db.collection("todos").get().then(function(querySnapshot) {
-                    querySnapshot.forEach(function(doc) {
+                    db.collection("todos").get().then(function(querySnapshot) {
+                        querySnapshot.forEach(function(doc) {
                     // doc.data() is never undefined for query doc snapshots
-                    console.log(doc.id, " => ", doc.data().task);
-                    let html = "";
-                    const ts = "";
+                        console.log(doc.id, " => ", doc.data().task);
+                        let html = "";
+                        let time = doc.data().timestamp;                  
                         html += "<td>" + doc.data().task + "</td>"
-                        html += "<td>" + doc.data().timestamp + "</td>"
+                        html += "<td>" + time.toDate(); "</td>"
                         html += "<tr>"
                         content += html;
-                        document.body.children[0].children[3].children[0].children[4].children[1].innerHTML = content;
+                        // console.log(time.toDate());
+                        document.body.children[0].children[3].children[0].children[4].children[1].innerHTML = content
                     });
                 });
             }
