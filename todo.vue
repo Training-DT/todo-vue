@@ -8,7 +8,7 @@ import firebase fr
             <div class="card-body">
                 <h3 class="card-title">Add New Todo</h3>
                 <label for="bookTitle">Title:</label>
-
+                
                 <input type="text" v-model="newTask" class="form-control">
                 <br>
                 <button type="button" class="btn btn-info" v-on:click="addTodo()">
@@ -20,10 +20,7 @@ import firebase fr
         <div class="card">
             <div class="card-body">
                 <h3 class="card-title">Todo List</h3>
-                <button type="button" class="btn btn-warning" v-on:click="loadTodo()">
-                    Load Todo
-                </button><br><br>
-
+                <button type="button" class="btn btn-warning" v-on:click="loadTodo()"> Load Todo </button><br><br>
                 <table class="table">
                     <thead class="thead-dark">
                         <tr>
@@ -34,10 +31,10 @@ import firebase fr
                     </thead>
                     <tbody>
                         <tr v-for="(ls) in todos" v-bind:key="ls.id"> 
-                            <td>{{ls.task}}</td>
-                            <td>{{ls.timestamp}}</td>
+                            <td>{{ls.todotask}}</td>
+                            <td>{{ls.todotimestamp}}</td>
                             <td>
-                                <button class="btn btn-info"  > Done </button>
+                                <button class="btn btn-danger"> Delete </button>
                             </td>
                         </tr>
                     </tbody>
@@ -90,21 +87,22 @@ import firebase fr
                     console.log("=> *******"+timestamp);
                },
             loadTodo() {
-                let content = "";
+                let content = [];
                     db.collection("todos").get().then(function(querySnapshot) {
                         querySnapshot.forEach(function(doc) {
-                    // doc.data() is never undefined for query doc snapshots
-                        console.log(doc.id, " => ", doc.data().task);
-                        let html = "";
-                        let time = doc.data().timestamp;                  
-                        html += "<td>" + doc.data().task + "</td>"
-                        html += "<td>" + time.toDate(); "</td>"
-                        html += "<tr>"
-                        content += html;
-                        // console.log(time.toDate());
-                        document.body.children[0].children[3].children[0].children[4].children[1].innerHTML = content
-                    });
+                            let todo = {
+                                todoid: "",
+                                todotask: "",
+                                todotimestamp: ""
+                            }
+                            // doc.data() is never undefined for query doc snapshots
+                            todo.todoid = doc.id;
+                            todo.todotask = doc.data().task;
+                            todo.todotimestamp = doc.data().timestamp.toDate()
+                            content.push(todo)
+                      });
                 });
+                this.todos = content;
             }
         }
     }
