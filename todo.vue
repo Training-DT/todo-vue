@@ -30,9 +30,9 @@ import firebase fr
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(ls) in todos" v-bind:key="ls.id"> 
-                            <td>{{ls.todotask}}</td>
-                            <td>{{ls.todotimestamp}}</td>
+                        <tr v-for="(todo) in todos" v-bind:key="todo.id"> 
+                            <td>{{todo.task}}</td>
+                            <td>{{todo.timestamp}}</td>
                             <td>
                                 <button class="btn btn-danger"> Delete </button>
                             </td>
@@ -83,26 +83,20 @@ import firebase fr
                     task : this.newTask,
                     timestamp : new Date(),
                 }); 
-                    console.log(this.newTask + "save data!");
-                    console.log("=> *******"+timestamp);
-               },
+            },
             loadTodo() {
-                let content = [];
-                    db.collection("todos").get().then(function(querySnapshot) {
-                        querySnapshot.forEach(function(doc) {
-                            let todo = {
-                                todoid: "",
-                                todotask: "",
-                                todotimestamp: ""
-                            }
-                            // doc.data() is never undefined for query doc snapshots
-                            todo.todoid = doc.id;
-                            todo.todotask = doc.data().task;
-                            todo.todotimestamp = doc.data().timestamp.toDate()
-                            content.push(todo)
-                      });
+                let todolist = [];
+                db.collection("todos").get().then(function(querySnapshot) {
+                querySnapshot.forEach(function(doc) {
+                    let todo = {
+                        id: doc.id,
+                        task: doc.data().task,
+                        timestamp: doc.data().timestamp.toDate()
+                    }
+                todolist.push(todo)
                 });
-                this.todos = content;
+                });
+                this.todos = todolist;
             }
         }
     }
