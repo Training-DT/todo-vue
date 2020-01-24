@@ -8,7 +8,7 @@ import firebase fr
             <div class="card-body">
                 <h3 class="card-title">Add New Todo</h3>
                 <label for="bookTitle">Title:</label>
-
+                
                 <input type="text" v-model="newTask" class="form-control">
                 <br>
                 <button type="button" class="btn btn-info" v-on:click="addTodo()">
@@ -20,6 +20,7 @@ import firebase fr
         <div class="card">
             <div class="card-body">
                 <h3 class="card-title">Todo List</h3>
+                <button type="button" class="btn btn-warning" v-on:click="loadTodo()"> Load Todo </button><br><br>
                 <table class="table">
                     <thead class="thead-dark">
                         <tr>
@@ -29,11 +30,11 @@ import firebase fr
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(ls) in todos" v-bind:key="ls.id"> 
-                            <td>{{ls.task}}</td>
-                            <td>{{ls.timestamp}}</td>
+                        <tr v-for="(todo) in todos" v-bind:key="todo.id"> 
+                            <td>{{todo.task}}</td>
+                            <td>{{todo.timestamp}}</td>
                             <td>
-                                <button class="btn btn-info"  > Done </button>
+                                <button class="btn btn-danger"> Delete </button>
                             </td>
                         </tr>
                     </tbody>
@@ -64,26 +65,40 @@ import firebase fr
     firebase.initializeApp(firebaseConfig);
     var db = firebase.firestore(); 
 
-    export default{
-        data(){
+    export default {
+        data() {
             return{
                 todos:[],
-                newTask:'' 
+                newTask:''
             }
         },
-        firestore(){
+        firestore() {
             return{
                 todos:db.collection('todos'),
             }
         },
-        methods:{
-            addTodo(){
+        methods: {
+            addTodo() {
                 db.collection('todos').add({
                     task : this.newTask,
                     timestamp : new Date(),
                 }); 
-               }
+            },
+            loadTodo() {
+                let todolist = [];
+                db.collection("todos").get().then(function(querySnapshot) {
+                    querySnapshot.forEach(function(doc) {
+                    let todo = {
+                        id: doc.id,
+                        task: doc.data().task,
+                        timestamp: doc.data().timestamp.toDate()
+                    }
+                    todolist.push(todo)
+                    });
+                });
+                this.todos = todolist;
             }
+        }
     }
 </script>
 
