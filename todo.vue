@@ -8,7 +8,7 @@ import firebase fr
             <div class="card-body">
                 <h3 class="card-title">Add New Todo</h3>
                 <label for="bookTitle">Title:</label>
-
+                
                 <input type="text" v-model="newTask" class="form-control">
                 <br>
                 <button type="button" class="btn btn-info" v-on:click="addTodo()">
@@ -25,6 +25,8 @@ import firebase fr
                 <button type="button" class="btn btn-danger" v-on:click="removeTodo(removeTask)">
                     Remove Todo
                 </button>
+
+                <button type="button" class="btn btn-warning" v-on:click="loadTodo()"> Load Todo </button><br><br>
                 <table class="table">
                     <thead class="thead-dark">
                         <tr>
@@ -34,11 +36,11 @@ import firebase fr
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(ls) in todos" v-bind:key="ls.id"> 
-                            <td>{{ls.task}}</td>
-                            <td>{{ls.timestamp}}</td>
+                        <tr v-for="(todo) in todos" v-bind:key="todo.id"> 
+                            <td>{{todo.task}}</td>
+                            <td>{{todo.timestamp}}</td>
                             <td>
-                                <button class="btn btn-info"  > Done </button>
+                                <button class="btn btn-danger"> Delete </button>
                             </td>
                         </tr>
                     </tbody>
@@ -96,7 +98,22 @@ import firebase fr
                         console.error("Error removing document: ", error);
                     });
                 }
+            },
+            loadTodo() {
+                let todolist = [];
+                db.collection("todos").get().then(function(querySnapshot) {
+                    querySnapshot.forEach(function(doc) {
+                    let todo = {
+                        id: doc.id,
+                        task: doc.data().task,
+                        timestamp: doc.data().timestamp.toDate()
+                    }
+                    todolist.push(todo)
+                    });
+                });
+                this.todos = todolist;
             }
+        }
     }
 </script>
 
