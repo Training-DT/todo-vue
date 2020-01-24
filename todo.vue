@@ -19,12 +19,6 @@
         <div class="card">
             <div class="card-body">
                 <h3 class="card-title">Todo List</h3>
-                <input type="text" v-model="removeTask" class="form-control">
-                <br>
-                <button type="button" class="btn btn-danger" v-on:click="removeTodo(todo.id)">
-                    Remove Todo
-                </button>
-
                 <button type="button" class="btn btn-warning" v-on:click="loadTodo()"> Load Todo </button><br><br>
                 <table class="table">
                     <thead class="thead-dark">
@@ -39,7 +33,7 @@
                             <td>{{todo.task}}</td>
                             <td>{{todo.timestamp}}</td>
                             <td>
-                                <button class="btn btn-danger"> Delete </button>
+                                <button class="btn btn-danger" v-on:click="removeTodo(todo.id)"> Delete </button>
                             </td>
                         </tr>
                     </tbody>
@@ -112,7 +106,7 @@
                     }).catch(function(error) {
                         console.error("Error removing document: ", error);
                         });  
-                    this.loadTodo();        
+                this.loadTodo();        
             }         
         }
     }
