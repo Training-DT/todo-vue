@@ -101,13 +101,11 @@
             },
             removeTodo(collectionID) {
                 db.collection('todos').doc(collectionID).delete().then(function() {
-                    console.log("Document successfully deleted!");
-                    console.log(collectionID);
                     }).catch(function(error) {
                         console.error("Error removing document: ", error);
                         });  
                 this.loadTodo();        
-            }         
+                    }         
         }
     }
 </script>
