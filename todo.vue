@@ -87,14 +87,14 @@ import firebase fr
             loadTodo() {
                 let todolist = [];
                 db.collection("todos").get().then(function(querySnapshot) {
-                querySnapshot.forEach(function(doc) {
+                    querySnapshot.forEach(function(doc) {
                     let todo = {
                         id: doc.id,
                         task: doc.data().task,
                         timestamp: doc.data().timestamp.toDate()
                     }
-                todolist.push(todo)
-                });
+                    todolist.push(todo)
+                    });
                 });
                 this.todos = todolist;
             }
