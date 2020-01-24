@@ -22,7 +22,7 @@ import firebase fr
                 <h3 class="card-title">Todo List</h3>
                 <input type="text" v-model="removeTask" class="form-control">
                 <br>
-                <button type="button" class="btn btn-danger" v-on:click="removeTodo(removeTask)">
+                <button type="button" class="btn btn-danger" v-on:click="removeTodo(todo.id)">
                     Remove Todo
                 </button>
 
@@ -97,8 +97,8 @@ import firebase fr
                     }).catch(function(error) {
                         console.error("Error removing document: ", error);
                     });
-                }
-            },
+                 loadTodo()
+                },
             loadTodo() {
                 let todolist = [];
                 db.collection("todos").get().then(function(querySnapshot) {
