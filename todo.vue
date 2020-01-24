@@ -22,7 +22,7 @@ import firebase fr
                 <h3 class="card-title">Todo List</h3>
                 <input type="text" v-model="removeTask" class="form-control">
                 <br>
-                <button type="button" class="btn btn-danger" v-on:click="rmTodo(removeTask)">
+                <button type="button" class="btn btn-danger" v-on:click="removeTodo(removeTask)">
                     Remove Todo
                 </button>
                 <table class="table">
@@ -89,7 +89,7 @@ import firebase fr
                     timestamp : new Date(),
                 }); 
                },
-            rmTodo(collectionID) {
+            removeTodo(collectionID) {
                 db.collection('todos').doc(collectionID).delete().then(function() {
                     console.log("Document successfully deleted!");
                     }).catch(function(error) {
