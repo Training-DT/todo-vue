@@ -1,4 +1,3 @@
-import firebase fr
 <template>
     <div id="app" class="container">
         <div class="page-header">
@@ -83,11 +82,12 @@ import firebase fr
                 db.collection('todos').add({
                     task : this.newTask,
                     timestamp : new Date(),
-                }); 
+                });
+                this.loadTodo(); 
             },
             loadTodo() {
                 let todolist = [];
-                db.collection("todos").get().then(function(querySnapshot) {
+                db.collection('todos').get().then(function(querySnapshot) {
                     querySnapshot.forEach(function(doc) {
                     let todo = {
                         id: doc.id,
@@ -103,11 +103,10 @@ import firebase fr
                 db.collection('todos').doc(collectionID).delete().then(function() {
                     console.log("Document successfully deleted!");
                     console.log(collectionID);
-                    
                     }).catch(function(error) {
                         console.error("Error removing document: ", error);
-                        });
-                   
+                        });  
+                    this.loadTodo();        
             }         
         }
     }
