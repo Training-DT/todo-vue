@@ -1,4 +1,3 @@
-import firebase fr
 <template>
     <div id="app" class="container">
         <div class="page-header">
@@ -34,7 +33,7 @@ import firebase fr
                             <td>{{todo.task}}</td>
                             <td>{{todo.timestamp}}</td>
                             <td>
-                                <button class="btn btn-danger"> Delete </button>
+                                <button class="btn btn-danger" v-on:click="removeTodo(todo.id)"> Delete </button>
                             </td>
                         </tr>
                     </tbody>
@@ -63,30 +62,32 @@ import firebase fr
     };
 
     firebase.initializeApp(firebaseConfig);
-    var db = firebase.firestore(); 
+    const db = firebase.firestore(); 
 
-    export default {
+    export default{
         data() {
-            return{
+            return {
                 todos:[],
-                newTask:''
+                newTask:'',
+                removeTask:'' 
             }
         },
         firestore() {
-            return{
+            return {
                 todos:db.collection('todos'),
             }
         },
-        methods: {
+        methods:{
             addTodo() {
                 db.collection('todos').add({
                     task : this.newTask,
                     timestamp : new Date(),
-                }); 
+                });
+                this.loadTodo(); 
             },
             loadTodo() {
                 let todolist = [];
-                db.collection("todos").get().then(function(querySnapshot) {
+                db.collection('todos').get().then(function(querySnapshot) {
                     querySnapshot.forEach(function(doc) {
                     let todo = {
                         id: doc.id,
@@ -97,7 +98,14 @@ import firebase fr
                     });
                 });
                 this.todos = todolist;
-            }
+            },
+            removeTodo(collectionID) {
+                db.collection('todos').doc(collectionID).delete().then(function() {
+                    }).catch(function(error) {
+                        console.error("Error removing document: ", error);
+                        });  
+                this.loadTodo();        
+                    }         
         }
     }
 </script>
