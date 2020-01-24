@@ -20,9 +20,9 @@ import firebase fr
         <div class="card">
             <div class="card-body">
                 <h3 class="card-title">Todo List</h3>
-                <input type="text" v-model="rmTask" class="form-control">
+                <input type="text" v-model="removeTask" class="form-control">
                 <br>
-                <button type="button" class="btn btn-danger" v-on:click="rmTodo(rmTask)">
+                <button type="button" class="btn btn-danger" v-on:click="rmTodo(removeTask)">
                     Remove Todo
                 </button>
                 <table class="table">
@@ -74,7 +74,7 @@ import firebase fr
             return {
                 todos:[],
                 newTask:'',
-                rmTask:'' 
+                removeTask:'' 
             }
         },
         firestore() {
@@ -89,8 +89,8 @@ import firebase fr
                     timestamp : new Date(),
                 }); 
                },
-            rmTodo(param) {
-                db.collection('todos').doc(param).delete().then(function() {
+            rmTodo(collectionID) {
+                db.collection('todos').doc(collectionID).delete().then(function() {
                     console.log("Document successfully deleted!");
                     }).catch(function(error) {
                         console.error("Error removing document: ", error);
